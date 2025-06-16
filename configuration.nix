@@ -8,11 +8,11 @@
   home-manager.backupFileExtension = "configFilesBackup";
   imports =
     [ # Include the results of the hardware scan.
-      ./yubikey.nix
-      ./bluetooth.nix
-      ./services.nix
-      ./display-manager.nix
-      ./virtualization.nix
+      ./modules/yubikey.nix
+      ./modules/bluetooth.nix
+      ./modules/services.nix
+      ./modules/display-manager.nix
+      ./modules/virtualization.nix
       ./hardware-configuration.nix
       # ./finger-print-scanner.nix
     ];
@@ -119,6 +119,7 @@
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
     # Keymapp Flashing rules for the Voyager
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0116", TAG+="uaccess"
   '';
 
   # Enable automatic login for the user.
@@ -164,7 +165,7 @@
   services.openssh.enable = true;
 
   networking.hosts = {
-    "127.0.0.1" = [ "turrentianos" "localhost" "keycloak" "sso1.openanalytics-dev.eu" "www.youtube.com" "m.youtube.com" "youtu.be" "youtube.com"];
+    "127.0.0.1" = [ "turrentianos" "localhost" "keycloak" "sso1.openanalytics-dev.eu" "sso.admin.openanalytics.eu"];#"www.youtube.com" "m.youtube.com" "youtu.be" "youtube.com"];
     "192.168.49.2" = [ "crane-demo.local" ];
     "10.179.152.49" = [ "vdi.contiwan.com" ];
   };

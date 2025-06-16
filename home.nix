@@ -1,24 +1,9 @@
 { pkgs, inputs, ... }:
-  # let 
-  #   vmware-horizon-client-22-05 = pkgs22-05.vmware-horizon-client; 
-  # in
 {
-  # TODO please change the username & home direcotry to your own
   home.username = "llionakis";
   home.homeDirectory = "/home/llionakis";
 
-  imports = [
-    ./compton.nix
-    ./i3.nix
-    ./polybar.nix
-    ./redshift.nix
-    ./rofi.nix
-    ./hyprland.nix
-    ./walker.nix
-    inputs.walker.homeManagerModules.walker
-    inputs.hyprland.homeManagerModules.default
-    # ./alacritty.nix
-  ];
+  imports = [];
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
@@ -28,12 +13,17 @@
     blueman
     arandr
     xfce.thunar
+    rofi-wayland
+    xsel
+    keymapp
+    k3d
+    thunderbird
 
     # Nice to have
+    ghostty
     wezterm
     oh-my-zsh
     networkmanagerapplet
-    zellij
     killall
     dig
     lshw
@@ -51,9 +41,11 @@
     iftop
     tcpflow
     brightnessctl
+    # install a few random packages for me
 
     # Work
     flameshot
+    peek
     rocketchat-desktop
     keepassxc
     google-chrome
@@ -62,13 +54,33 @@
     awscli2
     git-lfs
     vmware-horizon-client
+    vale
+    (python312.withPackages (python-pkgs: with python-pkgs; [
+      # select Python packages here
+      pip
+      boto3
+    ]))
+    ruff
+    gh
+    sshuttle
 
+    # Infra
     ## Kubernetes
     kubectl
     kubectx
     k9s
     minikube
+
     kustomize
+    kustomize-sops
+    
+    terraform
+    terraform-docs
+    terragrunt
+
+    sops
+    pre-commit
+    devbox
 
     # Terminal stuff
     feh
@@ -86,6 +98,8 @@
     # lsp
     nil
     nixpkgs-fmt
+    devenv
+    quickemu
 
     # Network
     knot-resolver
@@ -131,12 +145,6 @@
 
     neovim = { enable = true; };
 
-    # nixvim = {
-    #  enable = true;
-    #  default = true;
-    #};
-    #bash.enable = true;
-    #bash.bashrcExtra = builtins.readFile ./bash_sensible_config.sh;
     zsh = {
       enable = true;
       oh-my-zsh = {
@@ -148,12 +156,6 @@
     zoxide = {
       enable = true;
       enableZshIntegration = true;
-    };
-
-    zellij = {
-      enable = true;
-      enableZshIntegration = true;
-      settings = { copy_clipboard = "primary"; };
     };
   };
 

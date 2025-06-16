@@ -1,31 +1,28 @@
+{ inputs, pkgs, ... }:
+
 {
-  # imports = [
-  #   ./walker.nix
+  # Enable Hyprland
+  # programs.hyprland = {
+  #   enable = true;
+  #   withUWSM = true;
+  # };
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
+
+  # programs.hyprlock.enable = true;
+  # services.hypridle.enable = true;
+
+  # environment.systemPackages = with pkgs; [
+  #   pyprland
+  #   hyprpicker
+  #   hyprcursor
+  #   hyprlock
+  #   hypridle
+  #   hyprpaper
+
+  #   nwg-displays
+  #   zathura
+  #   mpv
+  #   imv
   # ];
-  wayland.windowManager.hyprland.enable = true;
-  wayland.windowManager.hyprland.settings = {
-    "$mod" = "SUPER";
-    bind =
-      [
-        "$mod, F, exec, firefox"
-        "$mod, D, exec, wofi"
-        ", Print, exec, grimblast copy area"
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-        builtins.concatLists (builtins.genList (
-            x: let
-              ws = let
-                c = (x + 1) / 10;
-              in
-                builtins.toString (x + 1 - (c * 10));
-            in [
-              "$mod, ${ws}, workspace, ${toString (x + 1)}"
-              "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-            ]
-          )
-          10)
-      );
-  };
 }
